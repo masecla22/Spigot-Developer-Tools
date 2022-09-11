@@ -16,6 +16,11 @@ else
     echo "Version already exists! Skipping download"
 fi
 
+if [ ! -d "instances" ] 
+then
+    mkdir instances
+fi
+
 if [ -d "instances/$1" ] 
 then
     echo "Instance already exists!"
@@ -23,4 +28,14 @@ then
 fi
 
 mkdir instances/$1
-cp -r data/* instances/$1
+cp -rv data/* instances/$1
+cp -v .svcache/$1/paper-$1.jar instances/$1
+chmod +x instances/$1/start.sh
+
+if [ -d "plugins" ]
+then
+    mkdir instances/$1/plugins
+    cp -rv plugins/* instances/$1/plugins
+fi
+
+echo "Done! To start the server, run ./start.sh in the instances/$1 directory"
